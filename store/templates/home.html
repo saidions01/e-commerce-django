@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    {% load static %}
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .product-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .product-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      .product-price {
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-description {
+        font-size: 0.9rem;
+        color: #555;
+      }
+      .heart {
+        cursor: pointer;
+        font-size: 24px;
+        color: #ccc;
+      }
+      .heart.active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+    <div class="product-grid">
+      {% for product in random_products %}
+      <div class="product-card">
+        <img
+          src="{{ product.image_url }}"
+          alt="{{ product.name }}"
+          width="250"
+        />
+        <div class="product-title" style="margin-top: 10px">
+          {{ product.name }}
+        </div>
+        <div class="product-price">${{ product.price }}</div>
+        <div class="product-description">
+          {{ product.description|truncatewords:20 }}...
+        </div>
+        <i class="fas fa-heart heart" data-product-id="{{ product.id }}"></i>
+      </div>
+      {% empty %}
+      <p>No products available.</p>
+      {% endfor %}
+    </div>
+    <script>
+      const hearts = document.querySelectorAll(".heart");
+
+      hearts.forEach((heart) => {
+        heart.addEventListener("click", function () {
+          const productId = this.dataset.productId;
+
+          fetch(`/add-to-wishlist/${productId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": "{{ csrf_token }}",
+              "Content-Type": "application/json",
+            },
+          }).then((res) => {
+            if (res.ok) {
+              this.classList.add("active");
+            }
+          });
+        });
+      });
+    </script>
+    {% include 'footer.html' %}
+  </body>
+</html>
