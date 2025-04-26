@@ -24,11 +24,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),  
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),   
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),   
     path('home/', views.home, name='home'),
     path('product-list/', views.product_list, name='product_list'),
- 
-]
+
+    path('', views.home, name='home')
+
+   
+
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Serve media files (for profile pics, etc.)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

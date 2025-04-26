@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+from .views import contact_view
 
 
 urlpatterns = [
@@ -10,7 +11,8 @@ urlpatterns = [
     path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('home/', views.home, name='home'),
     path('product-list/', views.product_list, name='product_list'),
-    
-  
+    path('contact/', contact_view, name='contact'),
+    path('myaccount/', views.my_account, name='my_account'),
+
 
 ]
