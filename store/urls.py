@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-
 from .views import contact_view
 
 
@@ -13,6 +12,6 @@ urlpatterns = [
     path('product-list/', views.product_list, name='product_list'),
     path('contact/', contact_view, name='contact'),
     path('myaccount/', views.my_account, name='my_account'),
-
-
+    path('myorders/', views.view_orders, name='view_orders'),
+    path('about-us/', views.about_us, name='about_us'),
 ]

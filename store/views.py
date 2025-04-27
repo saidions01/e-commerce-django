@@ -20,7 +20,6 @@ def product_list(request):
 def my_account(request):
     return render(request, 'myaccount.html')
 
-
 def wishlist_view(request):
     wishlisted_items = Wishlist.objects.select_related('product')  # no user filter
    
@@ -31,6 +30,12 @@ def add_to_wishlist(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     Wishlist.objects.get_or_create(user=request.user, product=product)
     return redirect('wishlist')
+
+def view_orders(request):
+    return render(request, 'view_orders.html')
+
+def about_us(request):
+    return render(request, 'about_us.html')
 
 
 @login_required
