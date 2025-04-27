@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f9fb;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #03556f;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .paragraph {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>About Us</h1>
+    </div>
+
+    <div class="container">
+        <!-- Replace the src below with your real image path -->
+        <img src="/static/images/about-us.jpg" alt="Besties Photo" class="profile-photo">
+
+        <p class="paragraph">
+            Built on years of laughter, adventures, and shared dreams, our friendship is a story of loyalty, trust, and endless memories. 
+            Together, we turn ordinary days into unforgettable moments and wherever life takes us, we know we’ll always have each other. 💕 
+            Here's to all the dreams we’ve yet to chase and all the memories we’ve yet to make.
+        </p>
+    </div>
+
+</body>
+</html>
