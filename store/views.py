@@ -6,12 +6,22 @@ from django.contrib.auth.decorators import login_required
 from .models import Wishlist, Product
 from store import views
 import random
-from .forms import ContactForm
+from .forms import ContactForm 
+from .models import Feedback
+from .models import Category
 
 def home(request):
     all_products = list(Product.objects.all())
     random_products = random.sample(all_products, min(len(all_products), 8))
-    return render(request, 'home.html', {'random_products': random_products})
+    feedbacks = Feedback.objects.all() 
+    categories = Category.objects.all()[:3]
+ 
+
+    return render(request, 'home.html', {
+        'random_products': random_products,
+        'feedbacks': feedbacks,
+        'categories': categories
+    })
 
 def product_list(request):
     products = Product.objects.all()
@@ -29,22 +39,25 @@ def wishlist_view(request):
 
 def add_to_wishlist(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    Wishlist.objects.get_or_create(user=request.user, product=product)
+    Wishlist.objects.get_or_create( product=product)
     return redirect('wishlist')
 
 
-@login_required
+
 def remove_from_wishlist(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    Wishlist.objects.filter(user=request.user, product=product).delete()
+    Wishlist.objects.filter( product=product).delete()
     return redirect('wishlist')
 
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Later: send email or save to database
+         
             return render(request, 'contact_success.html')
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
+def feedback_view(request):
+    feedbacks = Feedback.objects.all()
+    return render(request, 'feedback.html', {'feedbacks': feedbacks})

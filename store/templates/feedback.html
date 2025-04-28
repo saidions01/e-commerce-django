@@ -1,0 +1,81 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+        .feedback-section {
+            padding: 2rem;
+            background: #f9f9f9;
+        }
+        
+        .feedback-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+        }
+        
+        .feedback-card {
+            min-width: 300px;
+            background: #d0e9e7;
+            border-radius: 10px;
+            padding: 1.5rem;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .comment {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .rating {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+    <body>        
+<section class="feedback-section" >
+    <h2>What customers say about <span class="brand-name">E-SOUG</span>?</h2>
+    <div class="feedback-container">
+        {% for feedback in feedbacks %}
+            <div class="feedback-card">
+                <p class="comment">{{ feedback.comment }}</p>
+                <div class="user-info">
+                    <img src="{{ feedback.image }}" alt="{{ feedback.name }}">
+                    <div>
+                        <h4>{{ feedback.name }}</h4>
+                        <small>{{ feedback.occupation }}</small>
+                    </div>
+                </div>
+                <div class="rating">
+                    ⭐ {{ feedback.rating }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+</body>
+</html>
