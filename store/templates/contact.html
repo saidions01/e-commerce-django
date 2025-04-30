@@ -14,10 +14,11 @@
         }
 
         .header {
-            background-color: #03556f;
+            background-color: #f4f9fb;
             padding: 2rem;
             text-align: center;
-            color: white;
+            color: black;
+
         }
 
         .container {
@@ -47,8 +48,8 @@
         }
 
         .contact-form button {
-            background-color: #03556f;
-            color: white;
+            background-color: #C1DCDC;
+            color: black;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 5px;
@@ -57,7 +58,7 @@
         }
 
         .contact-form button:hover {
-            background-color: #023e52;
+            background-color: #C1DCDC;
         }
 
         .floating-image {
@@ -79,7 +80,9 @@
 }
     </style>
 </head>
-<body>
+{% include 'navbar.html' %}
+<body> 
+  
 
     <div class="header">
         <h1>Contact Us</h1>
@@ -101,3 +104,4 @@
 
 </body>
 </html>
+{% include 'footer.html' %}

@@ -1,48 +1,72 @@
-<nav
-  style="
-    background-color: #03556f;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 50px;
-  "
->
-  <div style="display: flex; align-items: center; gap: 1rem">
-    <h1 style="color: white; font-weight: bold; font-size: 1.5rem">Aladdin</h1>
-    <form
-      style="
-        display: flex;
-        align-items: center;
-        background: white;
-        border-radius: 4px;
-        overflow: hidden;
-      "
-    >
-      <input
-        type="text"
-        placeholder="Search Aladdin"
-        style="padding: 0.5rem; border: none; outline: none"
-      />
-      <select style="border: none; padding: 0.5rem; background-color: #f4f4f4">
-        <option>All Categories</option>
-      </select>
-      <button
-        type="submit"
-        style="background-color: #1792a6; padding: 0.5rem; border: none"
-      >
-        🔍
-      </button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home</title>
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  {% load static %}
+</head>
+<body>
+
+<!-- Navbar -->
+<nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: white; border-bottom: 1px solid #ccc;">
+
+  <!-- Logo -->
+  <div style="font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold;">
+    E-<span style="font-style: italic;">SOUG</span>
   </div>
-  <div style="display: flex; gap: 1.5rem; align-items: center; color: white">
-    <a href="" style="color: #fff; text-decoration: none">Home</a>
-    <a href="/about-us/" style="color: #fff; text-decoration: none">About Us</a>
-    <a href="" style="color: #fff; text-decoration: none">Shop</a>
-    <a href="/contact/" style="color: #fff; text-decoration: none">Contact Us</a>
-    <a href="/myaccount/" style="color: #fff; text-decoration: none">My Account</a>
-    <a href="#" style="color: #fff; text-decoration: none">
-      <i class="fas fa-shopping-cart"></i> Cart
+
+  <!-- Links -->
+  <div style="display: flex; gap: 30px;">
+    <a href="{% url 'home' %}" style="text-decoration: none; color: black; font-weight: bold;">Home</a>
+    <a href="{% url 'product_list' %}" style="text-decoration: none; color: gray;">Products</a>
+    <a href="{% url 'contact' %}" style="text-decoration: none; color: gray;">Contacts</a>
+  </div>
+
+  <!-- Icons + Dropdown -->
+  <div style="display: flex; align-items: center; gap: 20px; position: relative;">
+    <a href="{% url 'wishlist' %}" style="text-decoration: none; color: black; font-weight: bold;">
+      <i class="fas fa-shopping-cart"></i>
     </a>
+    <a href="#" style="text-decoration: none; color: black; font-weight: bold;">
+      <i class="fas fa-user"></i>
+    </a>
+
+    <!-- Bars Icon to Toggle Dropdown -->
+    <a href="#" id="menu-toggle" style="text-decoration: none; color: black; font-weight: bold;">
+      <i class="fas fa-bars"></i>
+    </a>
+
+    <!-- Dropdown Menu (Hidden by default) -->
+    <div id="dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; min-width: 150px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000;">
+      <a href="{% url 'logout' %}" style="display: block; padding: 10px; text-decoration: none; color: black; font-weight: bold;">Logout</a>
+      <!-- You can add more dropdown items here if needed -->
+    </div>
+
   </div>
+
 </nav>
+
+<!-- JavaScript for dropdown toggle -->
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  menuToggle.addEventListener('click', function(event) {
+    event.preventDefault();
+    dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
+  });
+
+  // Optional: Close the dropdown if clicking outside
+  document.addEventListener('click', function(event) {
+    if (!menuToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+      dropdownMenu.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>

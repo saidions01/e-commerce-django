@@ -3,15 +3,18 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='category_images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
-    image_url = models.URLField(max_length=500, blank=True, null=True)  # <-- New field
+    image_url = models.URLField(max_length=500, blank=True, null=True)  
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
 
@@ -31,7 +34,15 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-
     def __str__(self):
         return self.user.username
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=255)
+    occupation = models.CharField(max_length=255)
+    rating = models.FloatField()
+    comment = models.TextField()
+    image = models.ImageField(upload_to='feedback_images/')
+    def __str__(self):
+        return self.name
     
