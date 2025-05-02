@@ -13,3 +13,5 @@ def home(request):
 def product_list(request):
     return render(request, 'product_list.html')
 
+def login_view(request):
+    return render(request, '/ecommerce_platform/store/templates/registration/login.html')

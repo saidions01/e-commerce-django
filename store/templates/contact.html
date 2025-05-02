@@ -1,4 +1,4 @@
-{% load static %}   
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,6 @@
             padding: 2rem;
             text-align: center;
             color: black;
-
         }
 
         .container {
@@ -48,7 +47,7 @@
         }
 
         .contact-form button {
-            background-color: #C1DCDC;
+            background-color: #6baeff;
             color: black;
             border: none;
             padding: 0.8rem 1.5rem;
@@ -58,7 +57,7 @@
         }
 
         .contact-form button:hover {
-            background-color: #C1DCDC;
+            background-color: #8abfff;
         }
 
         .floating-image {
@@ -74,15 +73,33 @@
                 transform: translateY(-20px);
             }
         }
+
         .header h1 {
-    font-size: 3rem; /* or even bigger if you want */
-    margin: 0;
-}
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        /* Toast Notification Styles */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #28a745;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            top: 20px;
+            font-size: 17px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 {% include 'navbar.html' %}
-<body> 
-  
+<body>
 
     <div class="header">
         <h1>Contact Us</h1>
@@ -91,7 +108,7 @@
 
     <div class="container">
         <div class="contact-form">
-            <form method="POST">
+            <form id="contactForm" method="POST" onsubmit="showToast(event)">
                 {% csrf_token %}
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
@@ -99,8 +116,29 @@
                 <button type="submit">Send Message</button>
             </form>
         </div>
-        <img src="{% static 'images/contact_us.png' %}" alt="Contact Us Illustration" class="floating-image" width="400" >
+        <img src="{% static 'images/contact_us.png' %}" alt="Contact Us Illustration" class="floating-image" width="400">
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">Thank you! <br>Your message is sent successfully!</div>
+
+    <script>
+        // JavaScript function to show the toast notification
+        function showToast(event) {
+            event.preventDefault(); // Prevent the form from submitting immediately
+            var toast = document.getElementById("toast");
+            
+            // Show the toast
+            toast.style.visibility = "visible";
+            
+            // Hide the toast after 3 seconds
+            setTimeout(function() {
+                toast.style.visibility = "hidden";
+            }, 3000);
+            
+            
+        }
+    </script>
 
 </body>
 </html>

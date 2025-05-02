@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #6baeff, #e0f7ff);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 900px;
+      padding: 2rem;
+    }
+
+    .signup-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .signup-box h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .signup-box form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .signup-box label {
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .signup-box input[type="text"],
+    .signup-box input[type="email"],
+    .signup-box input[type="password"] {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .signup-box input:focus {
+      border-color: #6baeff;
+      outline: none;
+    }
+
+    .signup-box button {
+      padding: 0.75rem;
+      background: #6baeff;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .signup-box button:hover {
+      background: #539ce6;
+    }
+
+    .error-message {
+      color: #d33;
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .signup-image {
+      width: 400px;
+      max-width: 100%;
+      margin-left: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .signup-image {
+        width: 500px;
+      }
+
+      .signup-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="signup-box">
+      <h2>Create Your Account</h2>
+      {% if form.errors %}
+      <p class="error-message">Please fix the errors below.</p>
+      {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <label for="username">Username</label>
+        {{ form.username }}
+        
+        <label for="email">Email</label>
+        {{ form.email }}
+        
+        <label for="password">Password</label>
+        {{ form.password1 }}
+
+        <label for="password2">Confirm Password</label>
+        {{ form.password2 }}
+
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+    <img src="{% static 'images/login.png' %}" alt="Signup Illustration" class="signup-image" />
+  </div>
+</body>
+</html>

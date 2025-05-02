@@ -9,6 +9,9 @@ import random
 from .forms import ContactForm 
 from .models import Feedback
 from .models import Category
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import SignUpForm
 
 def home(request):
     all_products = list(Product.objects.all())
@@ -59,10 +62,21 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
          
-            return render(request, 'contact_success.html')
+            return render(request, 'contact.html')
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
 def feedback_view(request):
     feedbacks = Feedback.objects.all()
     return render(request, 'feedback.html', {'feedbacks': feedbacks})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log the user in directly after signing up
+            return redirect('/login')  # redirect to your homepage
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
