@@ -31,7 +31,7 @@ def my_account(request):
     return render(request, 'myaccount.html')
 
 def wishlist_view(request):
-    wishlisted_items = Wishlist.objects.select_related('product')  # no user filter
+    wishlisted_items = Wishlist.objects.select_related('product')  
    
     return render(request, 'wishlist.html', {'wishlisted_items': wishlisted_items})
 

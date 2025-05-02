@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Home</title>
-  
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
   {% load static %}
 </head>
 <body>
@@ -21,9 +18,20 @@
 
   <!-- Links -->
   <div style="display: flex; gap: 30px;">
-    <a href="{% url 'home' %}" style="text-decoration: none; color: black; font-weight: bold;">Home</a>
-    <a href="{% url 'product_list' %}" style="text-decoration: none; color: gray;">Products</a>
-    <a href="{% url 'contact' %}" style="text-decoration: none; color: gray;">Contacts</a>
+    {% url 'home' as home_url %}
+    <a href="{{ home_url }}" style="text-decoration: none; 
+      color: {% if request.path == home_url %}black{% else %}gray{% endif %}; 
+      font-weight: {% if request.path == home_url %}bold{% else %}normal{% endif %};">Home</a>
+
+    {% url 'product_list' as products_url %}
+    <a href="{{ products_url }}" style="text-decoration: none; 
+      color: {% if request.path == products_url %}black{% else %}gray{% endif %}; 
+      font-weight: {% if request.path == products_url %}bold{% else %}normal{% endif %};">Products</a>
+
+    {% url 'contact' as contact_url %}
+    <a href="{{ contact_url }}" style="text-decoration: none; 
+      color: {% if request.path == contact_url %}black{% else %}gray{% endif %}; 
+      font-weight: {% if request.path == contact_url %}bold{% else %}normal{% endif %};">Contacts</a>
   </div>
 
   <!-- Icons + Dropdown -->
