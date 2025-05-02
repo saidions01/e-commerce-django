@@ -97,7 +97,7 @@
         }
 
         .header {
-            background-color: #03556f;
+            background-color: #f4f9fb;
             padding: 2rem;
             text-align: center;
             color: white;
@@ -185,10 +185,10 @@
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <h1>My Orders</h1>
-    </div>
+    {% include 'navbar.html' %}
+  
+        <h1 style="margin-left : 20px;">My Orders</h1>
+   
 
     <div class="container">
         <h2>Order History</h2>
@@ -230,3 +230,4 @@
 
 </body>
 </html>
+{% include 'footer.html' %}
