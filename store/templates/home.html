@@ -191,7 +191,7 @@
             <img src="{{ category.image }}" alt="{{ category.name }}">
             <h3>{{ category.name }}</h3>
             <p>{{ category.description|truncatewords:10 }}</p>
-            <a href="#">Explore →</a>  
+            <a href=" {% url 'product_list' %}">Explore →</a>  
           </div>
         {% endfor %}
       </div>
