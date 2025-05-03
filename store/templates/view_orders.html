@@ -192,6 +192,7 @@
 
     <div class="container">
         <h2>Order History</h2>
+
         <table>
             <thead>
                 <tr>
@@ -202,24 +203,20 @@
                 </tr>
             </thead>
             <tbody>
+                {% for order in orders %}
+
                 <tr>
-                    <td>#123456</td>
-                    <td>April 26, 2025</td>
-                    <td>49.99 DT</td>
-                    <td><span class="status Pending">Pending</span></td>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.date_ordered|date:"F j, Y" }}</td>
+                    <td>{{ order.total_price }} DT</td>
+                    <td><span class="status {{ order.status }}">{{ order.status }}</span>
+                        <form method="post" action="{% url 'cancel_order' order.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color:#ff4d4f;color:white;padding:6px 12px;border:none;border-radius:5px;cursor:pointer;">Cancel</button>
+                        </form>
+                    </td>
                 </tr>
-                <tr>
-                    <td>#123457</td>
-                    <td>April 24, 2025</td>
-                    <td>89.99 DT</td>
-                    <td><span class="status Shipped">Shipped</span></td>
-                </tr>
-                <tr>
-                    <td>#123458</td>
-                    <td>April 20, 2025</td>
-                    <td>29.99 DT</td>
-                    <td><span class="status Delivered">Delivered</span></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
 

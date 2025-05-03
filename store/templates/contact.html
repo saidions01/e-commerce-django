@@ -110,11 +110,12 @@
         <div class="contact-form">
             <form id="contactForm" method="POST" onsubmit="showToast(event)">
                 {% csrf_token %}
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                {{ form.as_p }}
                 <button type="submit">Send Message</button>
             </form>
+
+           
+            
         </div>
         <img src="{% static 'images/contact_us.png' %}" alt="Contact Us Illustration" class="floating-image" width="400">
     </div>

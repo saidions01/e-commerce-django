@@ -33,6 +33,38 @@
       h1 {
         padding-left: 20px;
       }
+
+      .shop-button,
+.remove-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 10px;
+}
+
+.shop-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.shop-button:hover {
+  background-color: #0056b3;
+}
+
+.remove-button {
+  background-color: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.remove-button:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
     </style>
   </head>
 
@@ -57,26 +89,13 @@
           "
         >
           <h2 style="margin: 0">{{ item.product.name }}</h2>
-          <form
-            method="post"
-            action="{% url 'remove_from_wishlist' item.product.id %}"
-            style="margin: 0"
-          >
+          <form method="POST" action="{% url 'place_order' item.product.id %}" style="display: inline;">
             {% csrf_token %}
-            <button
-              type="submit"
-              style="
-                background: none;
-                border: none;
-                color: red;
-                font-size: 1.2rem;
-                cursor: pointer;
-              "
-              title="Remove from Wishlist"
-            >
-              ➖
-            </button>
+            <button type="submit" class="shop-button">Order</button>
           </form>
+          <a href="{% url 'remove_from_wishlist' item.product.id %}" class="remove-button">Remove</a>
+          
+   
         </div>
         <p>{{ item.product.description }}</p>
         <strong>${{ item.product.price }}</strong>

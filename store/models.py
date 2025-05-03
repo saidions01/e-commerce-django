@@ -46,3 +46,33 @@ class Feedback(models.Model):
     def __str__(self):
         return self.name
     
+class Contact(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} ({self.email})"
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    quantity = models.PositiveIntegerField(default=1)
+    status = models.CharField(max_length=20, choices=[
+        ("Pending", "Pending"),
+        ("Processing", "Processing"),
+        ("Shipped", "Shipped"),
+        ("Delivered", "Delivered"),
+        ("Cancelled", "Cancelled"),
+    ], default="Pending")
+
+    @property
+    def total_price(self):
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return f"Order #{self.id} by {self.user.username}"
+    
+    

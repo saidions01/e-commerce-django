@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <style>
+   
+
+        .form-container {
+
+            background: white;
+            padding: 2rem;
+            max-width: 500px;
+          
+            margin : 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 1rem;
+        }
+
+        input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            padding: 0.7rem;
+            background-color: #60a8ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #8abfff;
+        }
+
+        .message {
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+{% include 'navbar.html' %}
+<body>
+
+    {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="form-container">
+        <h2>Edit Profile</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" value="{{ request.user.first_name }}">
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" value="{{ request.user.last_name }}">
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ request.user.email }}">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>
+{% include 'footer.html' %}

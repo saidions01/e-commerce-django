@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -77,27 +78,27 @@
         margin-bottom: 15px;
       }
     
-      .heart {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+      .wishlist-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
         cursor: pointer;
-        font-size: 24px;
-        color: #ccc;
-        transition: color 0.3s;
+        font-size: 14px;
+        transition: background-color 0.3s;
       }
+      
+      .wishlist-btn:hover {
+        background-color: #0056b3;
+      }
+      
+      .wishlist-btn.added {
+        background-color: #28a745;
+        cursor: default;
+      }
+   
     
-      .heart.active {
-        color: red;
-      }
-      .heart {
-        cursor: pointer;
-        font-size: 24px;
-        color: #ccc;
-      }
-      .heart.active {
-        color: red;
-      }
     </style>
   </head>
   <body>
@@ -112,32 +113,58 @@
           <div class="price">${{ product.price }}</div>
           <div class="category">{{ product.category.name }}</div>
           <div class="description">{{ product.description|truncatewords:20 }}...</div>
-          <i class="fas fa-heart heart" data-product-id="{{ product.id }}"></i>
+          <button class="wishlist-btn" data-product-id="{{ product.id }}">
+            Add to Wishlist
+          </button>
         </li>
       {% endfor %}
     </ul>
   </div>
-    <script>
-      const hearts = document.querySelectorAll(".heart");
-
-      hearts.forEach((heart) => {
-        heart.addEventListener("click", function () {
-          const productId = this.dataset.productId;
-
-          fetch(`/add-to-wishlist/${productId}/`, {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": "{{ csrf_token }}",
-              "Content-Type": "application/json",
-            },
-          }).then((res) => {
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  
+    const csrftoken = getCookie("csrftoken");
+  
+    document.querySelectorAll(".wishlist-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const productId = this.dataset.productId;
+        const btn = this;
+  
+        fetch(`/add_to_wishlist/${productId}/`, {
+          method: "GET",
+          headers: {
+            "X-CSRFToken": csrftoken,
+          },
+        })
+          .then((res) => {
             if (res.ok) {
-              this.classList.add("active");
+              btn.textContent = "Added to Wishlist";
+              btn.classList.add("added");
+              btn.disabled = true;
+            } else if (res.status === 403) {
+              alert("You need to be logged in to add to the wishlist.");
+            } else {
+              alert("Something went wrong.");
             }
           });
-        });
       });
-    </script>
+    });
+  </script>
+  
+  
     {% include 'footer.html' %}
   </body>
 </html>

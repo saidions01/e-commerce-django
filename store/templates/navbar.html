@@ -28,7 +28,7 @@
       color: {% if request.path == products_url %}black{% else %}gray{% endif %}; 
       font-weight: {% if request.path == products_url %}bold{% else %}normal{% endif %};">Products</a>
 
-    {% url 'contact' as contact_url %}
+    {% url 'contact_us' as contact_url %}
     <a href="{{ contact_url }}" style="text-decoration: none; 
       color: {% if request.path == contact_url %}black{% else %}gray{% endif %}; 
       font-weight: {% if request.path == contact_url %}bold{% else %}normal{% endif %};">Contacts</a>
