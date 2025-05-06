@@ -1,76 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>My Wishlist</title>
     <style>
       body {
-        font-family: sans-serif;
-        background: #f4f4f4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f9fb;
         margin: 0;
+        color: #333;
       }
+
+      h1 {
+        padding: 2rem 1rem 0 2rem;
+        margin: 0;
+        font-size: 2.5rem;
+        color: #333;
+      }
+
       .wishlist-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 2rem;
-        max-width: 100%;
-        padding: 20px;
+        padding: 2rem;
       }
 
       .wishlist-card {
-        padding: 1rem;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #ffffff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+      }
+
+      .wishlist-card:hover {
+        transform: translateY(-5px);
       }
 
       .wishlist-card img {
         width: 100%;
-        max-height: 150px;
+        height: 160px;
         object-fit: cover;
+        border-radius: 6px;
         margin-bottom: 1rem;
       }
-      h1 {
-        padding-left: 20px;
+
+      .wishlist-card h2 {
+        font-size: 1.2rem;
+        margin: 0 0 0.5rem 0;
+        color: #222;
+      }
+
+      .wishlist-card p {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+      }
+
+      .wishlist-card strong {
+        font-size: 1.1rem;
+        color: #0c6980;
+        margin-top: auto;
+      }
+
+      .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
       }
 
       .shop-button,
-.remove-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  margin-left: 10px;
-}
+      .remove-button {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        text-decoration: none;
+      }
 
-.shop-button {
-  background-color: #007bff;
-  color: white;
-}
+      .shop-button {
+        background-color: #0c6980;
+        color: #fff;
+      }
 
-.shop-button:hover {
-  background-color: #0056b3;
-}
+      .shop-button:hover {
+        background-color: #084e5f;
+      }
 
-.remove-button {
-  background-color: transparent;
-  color: #dc3545;
-  border: 1px solid #dc3545;
-}
+      .remove-button {
+        background-color: transparent;
+        color: #dc3545;
+        border: 1px solid #dc3545;
+      }
 
-.remove-button:hover {
-  background-color: #dc3545;
-  color: white;
-}
+      .remove-button:hover {
+        background-color: #dc3545;
+        color: #fff;
+      }
 
+      .empty-message {
+        text-align: center;
+        padding: 3rem;
+        font-size: 1.2rem;
+        color: #777;
+      }
     </style>
   </head>
 
   {% include 'navbar.html' %}
   <body>
-    <h1>My Wishlist</h1>
+    <h1 style="text-align: center;">My Cart</h1>
 
     {% if wishlisted_items %}
     <div class="wishlist-grid">
@@ -79,31 +126,29 @@
         <img
           src="{{ item.product.image_url }}"
           alt="{{ item.product.name }}"
-          style="max-width: 100px"
         />
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <h2 style="margin: 0">{{ item.product.name }}</h2>
-          <form method="POST" action="{% url 'place_order' item.product.id %}" style="display: inline;">
+        <h2>{{ item.product.name }}</h2>
+        <p>{{ item.product.description }}</p>
+        <strong>${{ item.product.price }}</strong>
+
+        <div class="card-actions">
+          <form method="POST" action="{% url 'place_order' item.product.id %}">
             {% csrf_token %}
             <button type="submit" class="shop-button">Order</button>
           </form>
-          <a href="{% url 'remove_from_wishlist' item.product.id %}" class="remove-button">Remove</a>
-          
-   
+          <a
+            href="{% url 'remove_from_wishlist' item.product.id %}"
+            class="remove-button"
+          >
+            Remove
+          </a>
         </div>
-        <p>{{ item.product.description }}</p>
-        <strong>${{ item.product.price }}</strong>
       </div>
       {% endfor %}
     </div>
     {% else %}
-    <p>Your wishlist is empty.</p>
+    <div class="empty-message">Your wishlist is empty.</div>
+    {% endif %}
   </body>
+  {% include 'footer.html' %}
 </html>
-{% endif %} {% include 'footer.html' %}

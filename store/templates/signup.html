@@ -27,7 +27,6 @@
       background: white;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      width: 100%;
       max-width: 900px;
       padding: 2rem;
     }
@@ -95,11 +94,7 @@
       font-size: 0.95rem;
     }
 
-    .signup-image {
-      width: 400px;
-      max-width: 100%;
-      margin-left: 2rem;
-    }
+  
 
     @media (max-width: 768px) {
       .container {
@@ -107,9 +102,7 @@
         padding: 1rem;
       }
 
-      .signup-image {
-        width: 500px;
-      }
+    
 
       .signup-box {
         max-width: 100%;
@@ -149,7 +142,6 @@
         <a href="{% url 'login' %}" style="color: #6baeff; text-decoration: none; font-weight: 600;">Log in</a>
       </p>
     </div>
-    <img src="{% static 'images/login.png' %}" alt="Signup Illustration" class="signup-image" />
   </div>
 </body>
 </html>
