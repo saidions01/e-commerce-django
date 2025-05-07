@@ -12,6 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
 from django.contrib import messages
 from .forms import ContactForm
+from django.views import View
+from datetime import datetime
+
+
 def home(request):
     all_products = list(Product.objects.all())
     random_products = random.sample(all_products, min(len(all_products), 8))
@@ -149,3 +153,41 @@ def contact_us(request):
         form = ContactForm()
     
     return render(request, 'contact.html', {'form': form})
+
+
+
+def confirm_order(request):
+    return render(request, 'confirm_order.html')
+
+
+
+def online_payment(request):
+        return render(request, 'online_payment.html')
+
+def process_order(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        address = request.POST.get('address')
+        payment_method = request.POST.get('payment_method')
+
+        # For now, we'll just simulate an order number and total
+        order_number = 'ORD' + datetime.now().strftime('%Y%m%d%H%M%S')
+        total_amount = '49.99'  # Replace with actual logic
+
+        context = {
+            'order_number': order_number,
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+            'total_amount': total_amount,
+            'delivery_address': address,
+            'payment_method': payment_method,
+        }
+
+        # If the payment method is "online", redirect to the online payment page
+        if payment_method == 'online':
+            return redirect('online_payment')  # Ensure this URL is mapped to the correct view
+
+        # If it's not "online", show the process_order page with order details
+        return render(request, 'process_order.html', context)
+    
+    return redirect('confirm-order')  # If accessed without POST
+

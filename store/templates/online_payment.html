@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Paiement en ligne</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f9fb;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 2rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #03556f;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff7f50;
+        }
+
+        .submit-button {
+            background-color: #ff7f50;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #e76739;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <main>
+        <div class="container">
+            <h2>Paiement en ligne</h2>
+            <form method="post" action="{% url 'process_order' %}">
+                {% csrf_token %}
+                <div class="input-label">Numéro de carte</div>
+                <input type="text" name="card_number" placeholder="1234 5678 9012 3456" required>
+                
+                <div class="input-label">Date d'expiration</div>
+                <input type="text" name="expiration" placeholder="MM/YY" required>
+                
+                <div class="input-label">Code de sécurité</div>
+                <input type="text" name="cvv" placeholder="CVV" required>
+                
+                <input type="submit" class="submit-button" value="Payer maintenant">
+            </form>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+</body>
+</html>
