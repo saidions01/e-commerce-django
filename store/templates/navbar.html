@@ -9,54 +9,54 @@
 <body>
 
 <!-- Navbar -->
-<nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: white; border-bottom: 1px solid #ccc;">
+<nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: #0c6980; border-bottom: 1px solid #ccc; color: white;">
 
-  <!-- Logo -->
-  <div style="font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold;">
-    E-<span style="font-style: italic;">SOUG</span>
+  <!-- Logo Section: Image + Text Side by Side -->
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 40px;">
+    <div style="font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold; color: white;">
+      E-<span style="font-style: italic;">SOUG</span>
+    </div>
   </div>
 
   <!-- Links -->
   <div style="display: flex; gap: 30px;">
     {% url 'home' as home_url %}
     <a href="{{ home_url }}" style="text-decoration: none; 
-      color: {% if request.path == home_url %}black{% else %}gray{% endif %}; 
+      color: {% if request.path == home_url %}white{% else %}#d0d0d0{% endif %}; 
       font-weight: {% if request.path == home_url %}bold{% else %}normal{% endif %};">Home</a>
 
     {% url 'product_list' as products_url %}
     <a href="{{ products_url }}" style="text-decoration: none; 
-      color: {% if request.path == products_url %}black{% else %}gray{% endif %}; 
+      color: {% if request.path == products_url %}white{% else %}#d0d0d0{% endif %}; 
       font-weight: {% if request.path == products_url %}bold{% else %}normal{% endif %};">Products</a>
 
     {% url 'contact_us' as contact_url %}
     <a href="{{ contact_url }}" style="text-decoration: none; 
-      color: {% if request.path == contact_url %}black{% else %}gray{% endif %}; 
+      color: {% if request.path == contact_url %}white{% else %}#d0d0d0{% endif %}; 
       font-weight: {% if request.path == contact_url %}bold{% else %}normal{% endif %};">Contacts</a>
   </div>
 
   <!-- Icons + Dropdown -->
   <div style="display: flex; align-items: center; gap: 20px; position: relative;">
-    <a href="{% url 'wishlist' %}" style="text-decoration: none; color: black; font-weight: bold;">
+    <a href="{% url 'wishlist' %}" style="text-decoration: none; color: white; font-weight: bold;">
       <i class="fas fa-shopping-cart"></i>
     </a>
-    <a href="{% url 'my_account' %}" style="text-decoration: none; color: black; font-weight: bold;">
+    <a href="{% url 'my_account' %}" style="text-decoration: none; color: white; font-weight: bold;">
       <i class="fas fa-user"></i>
     </a>
 
-    <!-- Bars Icon to Toggle Dropdown -->
-    <a href="#" id="menu-toggle" style="text-decoration: none; color: black; font-weight: bold;">
+    <a href="#" id="menu-toggle" style="text-decoration: none; color: white; font-weight: bold;">
       <i class="fas fa-bars"></i>
     </a>
 
-    <!-- Dropdown Menu (Hidden by default) -->
     <div id="dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; min-width: 150px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000;">
       <a href="{% url 'logout' %}" style="display: block; padding: 10px; text-decoration: none; color: black; font-weight: bold;">Logout</a>
-      <!-- You can add more dropdown items here if needed -->
     </div>
-
   </div>
 
 </nav>
+
 
 <!-- JavaScript for dropdown toggle -->
 <script>
